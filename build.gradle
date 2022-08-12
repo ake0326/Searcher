@@ -8,3 +8,39 @@ plugins {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task upVersion {
+    doFirst {
+        println("Version name & code update ...")
+        def patternName = "versionName \"(\\d+)\\.(\\d+)\\.(\\d+)\""
+        def patternCode = "versionCode (\\d+)"
+        def manifestFile = file("./app/build.gradle")
+        def manifestText = manifestFile.getText()
+
+        def code = Integer.parseInt((manifestText =~ patternCode)[0][1])
+
+        def versionNames = (manifestText =~ patternName)[0]
+        def major = Integer.parseInt(versionNames[1])
+        def minor = Integer.parseInt(versionNames[2])
+        def patch = Integer.parseInt(versionNames[3])
+        def nextCode = code + ((patch+1) * 2)
+        def nextVersionName = major + "." + minor + "." + (patch + 1)
+
+        if (project.hasProperty("type")) {
+            def type = project.property("type")
+            if (type == "minor" || type == "mn") {
+                nextCode = code + ((minor + 1) * 3)
+                nextVersionName = major + "." + (minor + 1) + ".0"
+            } else if (type == "major" || type == "mj") {
+                nextCode = code + ((major+ 1) * 5)
+                nextVersionName = (major + 1) + ".0.0"
+            }
+        }
+
+        println("Set VersionName to " + nextVersionName)
+        println("Set versionCode(" + code + ") to " + nextCode)
+
+        def manifestContent = manifestText.replaceAll(patternName, "versionName \"" + nextVersionName + "\"").replaceAll(patternCode, "versionCode " + nextCode)
+        manifestFile.write(manifestContent)
+    }
+}
