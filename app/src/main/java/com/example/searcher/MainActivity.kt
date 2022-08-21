@@ -7,9 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import androidx.core.app.ActivityCompat
+import com.example.searcher.models.responses.SearchResponse
+import com.example.searcher.network.Retrofit
 import com.example.searcher.utils.PERMISSION_REQUEST_CODE
 import com.example.searcher.utils.logI
 import com.google.android.gms.location.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         locationClient = LocationServices.getFusedLocationProviderClient(this)
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
             requestPermission()
         }
         locationClient.lastLocation
@@ -53,6 +59,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        Retrofit.instance.getSearch(key = BuildConfig.API_KEY, lat = "34.66655309663585", lng = "135.49585782547595", format = "json")
+            .enqueue(object : Callback<SearchResponse> {
+                override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
+                    logI("NETWORK", "Get Search :: ${response.body()?.results?.shop}")
+                }
+
+                override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+                    logI("NETWORK", "Error Search :: $t")
+                }
+
+            })
     }
 
     private fun requestPermission() {
@@ -60,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         val permissions : Array<String> = arrayOf(
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
         )
         ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_CODE)
     }

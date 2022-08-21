@@ -26,6 +26,10 @@ android {
     flavorDimensions "version"
     productFlavors {
         production {
+            def properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            def API_KEY = properties.getProperty("APIKEY")
+            buildConfigField("String", "API_KEY", "${API_KEY}")
             dimension 'version'
         }
     }
@@ -81,6 +85,19 @@ dependencies {
     //layout
     def layout_version = '2.1.4'
     implementation "androidx.constraintlayout:constraintlayout:$layout_version"
+
+    //retrofit2
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    //okhttp3
+    def okhttp_version = "4.9.0"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     //test
     testImplementation 'junit:junit:4.13.2'
