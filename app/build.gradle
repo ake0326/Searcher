@@ -70,6 +70,10 @@ dependencies {
     def activity_version = '1.5.1'
     implementation "androidx.activity:activity-ktx:$activity_version"
 
+    //location
+    def location_version = '20.0.0'
+    implementation "com.google.android.gms:play-services-location:$location_version"
+
     //material
     def material_version = '1.6.1'
     implementation "com.google.android.material:material:$material_version"
