@@ -11,6 +11,7 @@ interface Apis {
         @Query("key") key: String,
         @Query("lat") lat: String,
         @Query("lng") lng: String,
+        @Query("range") range: Int,
         @Query("format") format: String = "json"
     ): Call<SearchResponse>
 }

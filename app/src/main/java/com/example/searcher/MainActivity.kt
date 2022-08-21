@@ -25,17 +25,31 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         locationClient = LocationServices.getFusedLocationProviderClient(this)
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
             requestPermission()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+
+    private fun searchApi(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermission()
+            return
+        }
         locationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 logI("LOCATION", "Get location :: $location")
                 location?.let {
-                    //TODO 通信処理
-                    } ?: run {
+                    requestApi(location)
+                } ?: run {
                     val request = LocationRequest.create().apply {
                         interval = 5000
                         fastestInterval = 3000
@@ -47,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                             override fun onLocationResult(result: LocationResult) {
                                 super.onLocationResult(result)
                                 val lastLocation = result.lastLocation
-                                //TODO 通信処理
+                                lastLocation?.let { requestApi(it) }
                                 locationClient.removeLocationUpdates(this)
                             }
                         },
@@ -57,9 +71,8 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    override fun onStart() {
-        super.onStart()
-        Retrofit.instance.getSearch(key = BuildConfig.API_KEY, lat = "34.66655309663585", lng = "135.49585782547595", format = "json")
+    private fun requestApi(location : Location){
+        Retrofit.instance.getSearch(key = BuildConfig.API_KEY, lat = location.latitude.toString(), lng = location.longitude.toString(), range = 3, format = "json")
             .enqueue(object : Callback<SearchResponse> {
                 override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                     logI("NETWORK", "Get Search :: ${response.body()?.results?.shop}")
@@ -73,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestPermission() {
-        //permission チェック
+        //permission
         val permissions : Array<String> = arrayOf(
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_FINE_LOCATION,
