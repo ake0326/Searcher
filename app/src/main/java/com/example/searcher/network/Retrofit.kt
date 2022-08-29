@@ -59,9 +59,9 @@ object Retrofit {
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .connectionPool(ConnectionPool(5,5, TimeUnit.SECONDS))
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
+//            .addInterceptor(HttpLoggingInterceptor().apply {
+//                level = HttpLoggingInterceptor.Level.BODY
+//            })
             .addInterceptor(errorInterceptor)
             .build()
         val retrofit = Retrofit.Builder()

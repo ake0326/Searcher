@@ -5,9 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.searcher.BuildConfig
+import com.example.searcher.R
 import com.example.searcher.databinding.FragmentResultBinding
 import com.example.searcher.models.adapters.ResultAdapter
+import com.example.searcher.models.items.Shop
 import com.example.searcher.models.responses.SearchResponse
 import com.example.searcher.network.Retrofit
 import com.example.searcher.utils.logI
@@ -48,8 +53,22 @@ class ResultFragment : Fragment() {
                     logI("NETWORK", "Error Search :: $t")
                 }
 
-                override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    logI("ADAPTER", "Push")
+                override fun onItemClick(root: AdapterView<*>?, view: View?, pos: Int, pos1: Long) {
+                    val shop = binding.listView.adapter.getItem(pos) as Shop
+                    val bundle = bundleOf().apply {
+                        shop.let {
+                            putString("name", it.name)
+                            putString("lat", it.lat)
+                            putString("lng", it.lng)
+                            putString("logo_image", it.logo_image)
+                            putString("name_kana", it.name_kana)
+                            putString("address", it.address)
+                            putString("access", it.access)
+                            putString("open", it.open)
+                            putString("close", it.close)
+                        }
+                    }
+                    findNavController().navigate(R.id.action_result_fragment_to_detail_fragment, bundle)
                 }
             })
     }

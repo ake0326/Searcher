@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.searcher.R
 import com.example.searcher.models.items.Shop
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -37,6 +38,7 @@ class ResultAdapter(context: Context, private var data: List<Shop>) : BaseAdapte
         return pos.toLong()
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("ViewHolder", "SetTextI18n")
     override fun getView(pos: Int, view: View?, root: ViewGroup?): View {
         val v: View = layoutInflater.inflate(R.layout.list_result, root, false)

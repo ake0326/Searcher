@@ -92,18 +92,6 @@ class SelectFragment : Fragment() {
     }
 
     private fun createQuery(location: Location){
-        var query = ""
-        query += "key=${BuildConfig.API_KEY}&"
-        query += "lat=${location.latitude}&"
-        query += "lng=${location.longitude}&"
-        if(searchText != ""){ query += "keyword=${searchText.replace("　", " ")}&" }
-        query += "range=$range&"
-        when(binding.menuEat.isChecked){true -> query += "free_food=1&" else -> {} }
-        when(binding.menuDrink.isChecked){true -> query += "free_drink=1&" else -> {} }
-        when(binding.menuPrivate.isChecked){true -> query += "private_room=1&" else -> {} }
-        when(binding.menuSmoking.isChecked){true -> query += "non_smoking=1&" else -> {} }
-        query += "format=json"
-
         val bundle = bundleOf().apply {
             putString("key", BuildConfig.API_KEY)
             putString("lat", "${location.latitude}")
@@ -114,6 +102,7 @@ class SelectFragment : Fragment() {
             when(binding.menuDrink.isChecked){true -> putString("free_drink", "1") else -> {} }
             when(binding.menuPrivate.isChecked){true -> putString("private_room", "1") else -> {} }
             when(binding.menuSmoking.isChecked){true -> putString("non_smoking", "1") else -> {} }
+            putString("count", "100")
             putString("format", "json")
         }
         findNavController().navigate(R.id.action_select_fragment_to_result_fragment, bundle)
@@ -122,7 +111,6 @@ class SelectFragment : Fragment() {
 
     private inner class RadioGroupOnCheckedChangeListener : RadioGroup.OnCheckedChangeListener {
         override fun onCheckedChanged(radioGroup: RadioGroup?, checkedRadioButtonId: Int) {
-            requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             when (checkedRadioButtonId){
                 R.id.menu_short  -> range = 1
                 R.id.menu_middle -> range = 3

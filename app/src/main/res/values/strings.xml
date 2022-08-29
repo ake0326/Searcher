@@ -15,4 +15,9 @@
     <string name="menu_private_non">個室なし</string>
     <string name="menu_smoking_non">禁煙席なし</string>
     <string name="menu_search">検索する</string>
+    <string name="menu_shop_name">店舗名</string>
+    <string name="menu_shop_address">住所</string>
+    <string name="menu_shop_access">アクセス</string>
+    <string name="menu_shop_open">営業時間</string>
+    <string name="menu_shop_close">定休日</string>
 </resources>
