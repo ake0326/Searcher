@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.example.searcher.databinding.FragmentResultBinding
 import com.example.searcher.models.adapters.ResultAdapter
@@ -33,17 +34,22 @@ class ResultFragment : Fragment() {
 
     private fun requestApi(query: Map<String,String?>){
         Retrofit.instance.getSearch(query)
-            .enqueue(object : Callback<SearchResponse> {
+            .enqueue(object : Callback<SearchResponse>, AdapterView.OnItemClickListener {
                 override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                     logI("NETWORK", "Get Search :: ${response.body()?.results?.shop}")
 
                     val adapter = response.body()?.let { ResultAdapter(requireContext(), it.results.shop) }
                     binding.listView.adapter = adapter
+                    binding.listView.onItemClickListener = this
                     logI("NETWORK", "Create")
                 }
 
                 override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                     logI("NETWORK", "Error Search :: $t")
+                }
+
+                override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    logI("ADAPTER", "Push")
                 }
             })
     }
