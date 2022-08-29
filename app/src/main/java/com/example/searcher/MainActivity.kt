@@ -3,6 +3,7 @@ package com.example.searcher
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
+import androidx.navigation.findNavController
 import com.example.searcher.databinding.ActivityMainBinding
 import com.example.searcher.utils.KeyboardUtils
 
@@ -22,5 +23,9 @@ class MainActivity : AppCompatActivity() {
         KeyboardUtils.hideKeyboard(focusView)
 
         return false
+    }
+
+    override fun onBackPressed() {
+        findNavController(R.id.nav_host_fragment).popBackStack()
     }
 }

@@ -92,7 +92,7 @@ class SelectFragment : Fragment() {
     }
 
     private fun createQuery(location: Location){
-        var query = "?"
+        var query = ""
         query += "key=${BuildConfig.API_KEY}&"
         query += "lat=${location.latitude}&"
         query += "lng=${location.longitude}&"
@@ -104,7 +104,18 @@ class SelectFragment : Fragment() {
         when(binding.menuSmoking.isChecked){true -> query += "non_smoking=1&" else -> {} }
         query += "format=json"
 
-        val bundle = bundleOf("query" to query)
+        val bundle = bundleOf().apply {
+            putString("key", BuildConfig.API_KEY)
+            putString("lat", "${location.latitude}")
+            putString("lng", "${location.longitude}")
+            if(searchText != ""){ putString("keyword", searchText.replace("　", " ")) }
+            putString("range", "$range")
+            when(binding.menuEat.isChecked){true -> putString("free_food", "1") else -> {} }
+            when(binding.menuDrink.isChecked){true -> putString("free_drink", "1") else -> {} }
+            when(binding.menuPrivate.isChecked){true -> putString("private_room", "1") else -> {} }
+            when(binding.menuSmoking.isChecked){true -> putString("non_smoking", "1") else -> {} }
+            putString("format", "json")
+        }
         findNavController().navigate(R.id.action_select_fragment_to_result_fragment, bundle)
     }
 

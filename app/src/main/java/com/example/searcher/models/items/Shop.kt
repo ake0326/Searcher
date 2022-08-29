@@ -6,5 +6,6 @@ data class Shop(
     val logo_image : String,
     val name_kana : String,
     val address : String,
+    val access : String,
     val station_name : String,
 )

@@ -25,11 +25,6 @@
         android:label="result"
         tools:layout="@layout/fragment_result" >
 
-        <argument
-            android:name="param"
-            app:argType="string"
-            android:defaultValue="" />
-
         <action
             android:id="@+id/action_result_fragment_to_select_fragment"
             app:destination="@id/select_fragment" />
