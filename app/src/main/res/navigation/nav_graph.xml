@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/select_fragment" >
+
+    <fragment
+        android:id="@+id/select_fragment"
+        android:name="com.example.searcher.fragments.SelectFragment"
+        android:label="select"
+        tools:layout="@layout/fragment_select" >
+
+        <action
+            android:id="@+id/action_select_fragment_to_result_fragment"
+            app:destination="@id/result_fragment" />
+        <action
+            android:id="@+id/action_select_fragment_to_detail_fragment"
+            app:destination="@id/detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/result_fragment"
+        android:name="com.example.searcher.fragments.ResultFragment"
+        android:label="result"
+        tools:layout="@layout/fragment_result" >
+
+        <argument
+            android:name="param"
+            app:argType="string"
+            android:defaultValue="" />
+
+        <action
+            android:id="@+id/action_result_fragment_to_select_fragment"
+            app:destination="@id/select_fragment" />
+        <action
+            android:id="@+id/action_result_fragment_to_detail_fragment"
+            app:destination="@id/detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detail_fragment"
+        android:name="com.example.searcher.fragments.DetailFragment"
+        android:label="detail"
+        tools:layout="@layout/fragment_detail" >
+
+        <action
+            android:id="@+id/action_detail_fragment_to_result_fragment"
+            app:destination="@id/result_fragment" />
+        <action
+            android:id="@+id/action_detail_fragment_to_select_fragment"
+            app:destination="@id/select_fragment" />
+    </fragment>
+
+</navigation>

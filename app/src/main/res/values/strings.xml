@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Searcher</string>
+    <string name="menu_keyword">検索キーワード</string>
+    <string name="menu_range">検索範囲</string>
+    <string name="menu_condition">検索条件</string>
+    <string name="menu_short">300m</string>
+    <string name="menu_middle">1000m</string>
+    <string name="menu_large">2000m</string>
+    <string name="menu_eat">食べ放題あり</string>
+    <string name="menu_drink">飲み放題あり</string>
+    <string name="menu_private">個室あり</string>
+    <string name="menu_smoking">禁煙席あり</string>
+    <string name="menu_eat_non">食べ放題なし</string>
+    <string name="menu_drink_non">飲み放題なし</string>
+    <string name="menu_private_non">個室なし</string>
+    <string name="menu_smoking_non">禁煙席なし</string>
+    <string name="menu_search">検索する</string>
 </resources>
