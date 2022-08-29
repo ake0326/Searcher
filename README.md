@@ -22,7 +22,7 @@ local.properties に APIKEY="your api_key"を入力
 Android 12
 
 ## 開発期間
-2日間
+4日間
 
 ## アプリケーション機能
 
@@ -33,6 +33,14 @@ Android 12
 
 
 ### 使用しているAPI,SDK,ライブラリなど
+### API
 - ホットペッパーグルメサーチAPI
+### SDK ライブラリ
+- Retrofit2
+- Okhttp3
+- Gson
+- GMS Location
+- Navigation
+- Fragment
 
 ### アドバイスして欲しいポイント
