@@ -1,6 +1,4 @@
 ## アプリ詳細
-### 作者
-明蓮隆一郎
 ### アプリ名
 Searcher
 
@@ -15,6 +13,9 @@ Android Studio Chipmunk | 2021.2.1 Patch 1
 
 ### 開発言語
 Kotlin
+
+### Setup 方法
+local.properties に APIKEY="your api_key"を入力
 
 ## 動作対象端末・OS
 ### 動作対象OS
