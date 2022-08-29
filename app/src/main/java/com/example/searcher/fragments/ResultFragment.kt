@@ -4,17 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.example.searcher.databinding.FragmentResultBinding
 import com.example.searcher.models.adapters.ResultAdapter
 import com.example.searcher.models.responses.SearchResponse
 import com.example.searcher.network.Retrofit
 import com.example.searcher.utils.logI
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
