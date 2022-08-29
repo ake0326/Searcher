@@ -19,14 +19,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.searcher.BuildConfig
 import com.example.searcher.R
 import com.example.searcher.databinding.FragmentSelectBinding
-import com.example.searcher.models.responses.SearchResponse
-import com.example.searcher.network.Retrofit
 import com.example.searcher.utils.PERMISSION_REQUEST_CODE
 import com.example.searcher.utils.logI
 import com.google.android.gms.location.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SelectFragment : Fragment() {
 
@@ -48,7 +43,7 @@ class SelectFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val radioButton = view?.findViewById<RadioButton>(binding.menuMiddle.id)
+        val radioButton = view.findViewById<RadioButton>(binding.menuMiddle.id)
         radioButton?.isChecked = true
         val listener = RadioGroupOnCheckedChangeListener()
         val radioGroup = view.findViewById<RadioGroup>(binding.menuSelector.id)
